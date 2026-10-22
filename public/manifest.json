@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "BS Tab",
+  "version": "1.0",
+  "chrome_url_overrides": { "newtab": "index.html" },
+  "permissions": ["search"],
+  "host_permissions": [
+    "https://api.beatleader.xyz/*",
+    "https://scoresaber.com/*"
+  ]
+}

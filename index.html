@@ -6,8 +6,33 @@
     <title>New Tab</title>
   </head>
   <body>
+    <div id="clock"></div>
+    <div id="date"></div>
     <form id="search">
-      <input id="q" type="text" placeholder="Search" autofocus autocomplete="off" />
+      <input id="q" name="q" type="text" placeholder="Search" autofocus autocomplete="off" />
     </form>
+    <nav id="link"></nav>
+    <div id="beatSaberStats">
+      <button id="refreshStats" type="button" title="Refresh stats">⟳</button>
+      <div class="stat-row">
+        <a id="bl-link" href="https://beatleader.com"><img id="bl-logo" alt="BeatLeader" /></a>
+        <span id="BL"></span>
+      </div>
+
+      <div class="stat-row">
+        <a id="ss-link" href="https://scoresaber.com"><img id="ss-logo" alt="ScoreSaber" /></a>
+        <span id="SS"></span>
+      </div>
+    </div>
+    <button id="settings-btn" type="button" title="settings">⚙</button>
+
+    <div id="settings-panel" hidden>
+      <label>Player ID <input id="id-input" type="text" placeholder="Enter Player ID" autocomplete="off" /></label>
+      <h3>Links</h3>
+      <div id="link-rows"></div>
+      <button id="add-link" type="button">Add Link</button>
+      <button id="save" type="button">Save</button>
+    </div>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
