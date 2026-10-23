@@ -1,0 +1,208 @@
+:root {
+  --bg: #0f1115;
+  --surface: #1a1d24;
+  --border: rgba(255, 255, 255, 0.12);
+  --text: #e8e8ee;
+  --muted: #8d93a1;
+  --red: #ff4d5e;
+  --yellow: #ffeb3b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: linear-gradient(135deg, #0f1115, #3a1f5c, #12406b, #5c1f3a, #0f1115);
+  background-size: 400% 400%;
+  animation: drift 20s ease infinite;
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+@keyframes drift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+#clock {
+  font-size: 4.5rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+#date {
+  margin-top: -16px;
+  color: var(--muted);
+}
+
+#q {
+  width: min(560px, 85vw);
+  padding: 14px 22px;
+  font-size: 1.05rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+#q:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.2);
+}
+
+#search-wrap {
+  position: relative;
+  width: min(560px, 85vw);
+}
+
+#recent-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+
+#recent-list li {
+  padding: 10px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+#recent-list li:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+#link {
+  display: flex;
+  gap: 14px;
+}
+
+#link a {
+  padding: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+#link a:hover {
+  transform: translateY(-2px);
+  border-color: var(--blue);
+}
+
+#link img { width: 32px; height: 32px; display: block; }
+
+#beatSaberStats {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 52px 16px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stat-row img { width: 24px; height: 24px; display: block; }
+
+.stat-row:first-of-type { border-left: 3px solid var(--red); padding-left: 10px; }
+.stat-row:last-of-type { border-left: 3px solid var(--yellow); padding-left: 10px; }
+
+#refreshStats {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+button {
+  padding: 6px 12px;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover { border-color: var(--blue); }
+
+#settings-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  font-size: 1.5rem;
+  background: var(--surface);
+  border-radius: 12px;
+}
+
+#settings-panel {
+  position: fixed;
+  top: 62px;
+  right: 16px;
+  z-index: 10;
+  width: min(420px, 90vw);
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+#settings-panel[hidden] { display: none; }
+
+#settings-panel h3 { margin: 16px 0 8px; }
+
+#settings-panel input {
+  padding: 8px 10px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  outline: none;
+}
+
+#settings-panel input:focus { border-color: var(--blue); }
+
+#id-input { width: 100%; margin-top: 6px; }
+
+.link-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.link-row input:first-child { width: 30%; }
+.link-row input:nth-child(2) { flex: 1; min-width: 0; }
+
+#add-link, #save { margin-top: 8px; margin-right: 6px; }
+#save { border-color: var(--blue); }

@@ -1,9 +1,12 @@
+import "./style.css";
+
 const defaults = {
   playerID: null,
   links: [{ name: "Youtube", url: "https://www.youtube.com/" }],
 };
 
 const maxAge = 10 * 60 * 1000;
+const maxRecent = 8;
 
 function loadSettings() {
   try {
@@ -25,6 +28,7 @@ const clock = document.querySelector("#clock");
 const date = document.querySelector("#date");
 const form = document.querySelector("#search");
 const input = document.querySelector("#q");
+const recentList = document.querySelector("#recent-list");
 const nav = document.querySelector("#link");
 const panel = document.querySelector("#settings-panel");
 const idInput = document.querySelector("#id-input");
@@ -116,12 +120,54 @@ function setupSettingsPanel() {
   });
 }
 
+function loadRecent() {
+  try {
+    return JSON.parse(localStorage.getItem("recent")) ?? [];
+  } catch {
+    return [];
+  }
+}
+
+function addRecent(q) {
+  const list = [q, ...loadRecent().filter((item) => item !== q)].slice(0, maxRecent);
+  localStorage.setItem("recent", JSON.stringify(list));
+}
+
+function renderRecent() {
+  const typed = input.value.trim().toLowerCase();
+  const matches = loadRecent().filter((q) => q.toLowerCase().includes(typed));
+
+  const items = matches.map((q) => {
+    const li = document.createElement("li");
+    li.textContent = q;
+    li.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      input.value = q;
+      form.requestSubmit();
+    });
+    return li;
+  });
+
+  recentList.replaceChildren(...items);
+  recentList.hidden = items.length === 0;
+}
+
+function setupRecent() {
+  input.addEventListener("focus", renderRecent);
+  input.addEventListener("input", renderRecent);
+  input.addEventListener("blur", () => (recentList.hidden = true));
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") recentList.hidden = true;
+  });
+}
+
 function setupSearch() {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const q = input.value.trim();
     if (!q) return;
+    addRecent(q);
 
     if (typeof chrome !== "undefined" && chrome.search && chrome.search.query) {
       chrome.search.query({ text: q, disposition: "CURRENT_TAB" });
@@ -210,6 +256,7 @@ setupLogos();
 renderShortcuts();
 setupSettingsPanel();
 setupSearch();
+setupRecent();
 setupClock();
 loadStats();
 document.querySelector("#refreshStats").addEventListener("click", () => loadStats(true));

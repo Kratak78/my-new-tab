@@ -9,7 +9,10 @@
     <div id="clock"></div>
     <div id="date"></div>
     <form id="search">
-      <input id="q" name="q" type="text" placeholder="Search" autofocus autocomplete="off" />
+      <div id="search-wrap">
+        <input id="q" name="q" type="text" placeholder="Search" autofocus autocomplete="off" list="recent" />
+        <ul id="recent-list" hidden></ul>
+      </div>
     </form>
     <nav id="link"></nav>
     <div id="beatSaberStats">
