@@ -8,7 +8,7 @@ const defaults = {
 const maxAge = 10 * 60 * 1000;
 const maxRecent = 8;
 
-const proxy = "newtab-proxy.martin-kratochvil2008.workers.dev";
+const proxy = "https://newtab-proxy.martin-kratochvil2008.workers.dev/?url=";
 const inExtension = typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.id;
 
 function apiUrl(url) {
