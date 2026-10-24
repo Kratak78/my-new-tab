@@ -8,6 +8,13 @@ const defaults = {
 const maxAge = 10 * 60 * 1000;
 const maxRecent = 8;
 
+const proxy = "newtab-proxy.martin-kratochvil2008.workers.dev";
+const inExtension = typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.id;
+
+function apiUrl(url) {
+  return inExtension ? url : proxy + encodeURIComponent(url);
+}
+
 function loadSettings() {
   try {
     return { ...defaults, ...JSON.parse(localStorage.getItem("settings")) };
@@ -188,7 +195,7 @@ function loadWithCache(key, url, render, force = false) {
   if (cached) render(cached.data);
   if (!force && cached && Date.now() - cached.time < maxAge) return;
 
-  fetch(url)
+  fetch(apiUrl(url))
     .then((response) => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
